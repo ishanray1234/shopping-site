@@ -6,12 +6,26 @@ function PaymentPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const product = location.state?.product;
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvv, setCvv] = useState('');
   const [paid, setPaid] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+    useEffect(() => {
+        const userCookie = getCookie('user');
+        if (userCookie) {
+        setIsLoggedIn(true);
+        }
+    }, []);
+
+    const getCookie = (name) => {
+        return document.cookie.split('; ').reduce((r, v) => {
+        const parts = v.split('=');
+        return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+        }, '');
+    };
 
   const handlePayment = (e) => {
     e.preventDefault();
@@ -23,10 +37,10 @@ function PaymentPage() {
 
     // Simulate saving purchase
     const purchase = {
-      userId: user.id,
-      productId: product.id,
-      productName: product.name,
-      price: product.price,
+      userId: JSON.parse(getCookie('user'))?.username || '',
+      productId: product.uniq_id,
+      productName: product.product_name,
+      price: product.selling_price,
       timestamp: new Date().toISOString(),
     };
 
@@ -44,8 +58,8 @@ function PaymentPage() {
       {!paid ? (
         <>
           <h2>Enter Payment Details</h2>
-          <p><strong>Item:</strong> {product.name}</p>
-          <p><strong>Price:</strong> ₹{product.price}</p>
+          <p><strong>Item:</strong> {product.product_name}</p>
+          <p><strong>Price:</strong> ₹{product.selling_price}</p>
 
           <form onSubmit={handlePayment} className="payment-form">
             <input

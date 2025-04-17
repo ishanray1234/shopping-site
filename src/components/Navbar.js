@@ -49,14 +49,9 @@ const Navbar = ({ cartItems = [], isLoggedIn, setIsLoggedIn, username }) => {
     setIsLoggedIn(false);
   };
 
-  const handleProductClick = (product) => {
-    navigate(`/product/${product.uniq_id}`, { state: { product } });
-  };
-
-  const handleUserInfoClick = () => {
-    console.log("User Info Clicked");
-    navigate(`/user-info`, { state: { username, cartItems } });
-  };
+  // const handleProductClick = (product) => {
+  //   navigate(`/product/${product.uniq_id}`, { state: { product } });
+  // };
 
   return (
     <div className="navbar">
@@ -95,8 +90,12 @@ const Navbar = ({ cartItems = [], isLoggedIn, setIsLoggedIn, username }) => {
 
       {/* Right-side buttons */}
       <div className="navbar-right">
-        {isLoggedIn && username && (
-          <Link className="navbar-cart" onClick={handleUserInfoClick}>
+        {isLoggedIn && (
+          <Link
+          className="navbar-cart"
+          to="/userinfo"
+          state={{ username, cartItems }}
+        >
           Hello, <strong>{username}</strong>
         </Link>
         )}

@@ -1,12 +1,26 @@
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import '../styles/ProductCard.css';
 import placeholderImage from '../static/laptop.jpg'; // Fallback image
 
 function ProductCard({ product, addToCart }) {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
-  const isLoggedIn = !user;
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+    useEffect(() => {
+      const userCookie = getCookie('user');
+      if (userCookie) {
+        setIsLoggedIn(true);
+      }
+    }, []);
+  
+    const getCookie = (name) => {
+      return document.cookie.split('; ').reduce((r, v) => {
+        const parts = v.split('=');
+        return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+      }, '');
+    };
+  
   const handleBuyNow = () => {
     if (isLoggedIn) {
       navigate('/payment', { state: { product } });

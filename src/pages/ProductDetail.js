@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import '../styles/ProductDetail.css';
 import placeholderImage from '../static/laptop.jpg';
 
@@ -6,9 +7,21 @@ function ProductDetail({ addToCart }) {
   const navigate = useNavigate();
   const location = useLocation();
   const product = location.state?.product;
-
-  const user = JSON.parse(localStorage.getItem('user'));
-  const isLoggedIn = !!user;
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+    useEffect(() => {
+      const userCookie = getCookie('user');
+      if (userCookie) {
+        setIsLoggedIn(true);
+      }
+    }, []);
+  
+    const getCookie = (name) => {
+      return document.cookie.split('; ').reduce((r, v) => {
+        const parts = v.split('=');
+        return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+      }, '');
+    };
 
   if (!product) {
     return <div>Product not found</div>;

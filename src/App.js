@@ -87,7 +87,7 @@ function App() {
           element={<ProductDetail addToCart={addToCart} />}
         />
         <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={handleRemove} />} />
-        <Route path="/user-info" element={<UserInfo />} />
+        <Route path="/userinfo" element={<UserInfo cartItems={cartItems}/>} />
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/payment" element={<PaymentPage />} />
