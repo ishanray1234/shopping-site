@@ -1,0 +1,15 @@
+.category-page {
+    display: flex;
+  }
+  
+  .products-grid {
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .products-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  

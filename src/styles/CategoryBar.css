@@ -1,0 +1,41 @@
+.category-bar {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  background-color: #ffffff;
+  padding: 12px 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 64px; /* Adjust if navbar height changes */
+  z-index: 999;
+}
+
+.category-bar button {
+  background-color: #f0f2f5;
+  color: #333;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.category-bar button:hover {
+  background-color: #007bff;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+}
+
+.category-bar {
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.category-bar::-webkit-scrollbar {
+  display: none;
+}

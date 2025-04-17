@@ -7,8 +7,10 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.8.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -35,5 +37,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4"
+  },
+  "resolutions": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "proxy": "https://b9b7-2409-40e1-10f9-11c0-cf6b-5c1d-433b-11f4.ngrok-free.app"
+
 }

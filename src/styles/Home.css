@@ -1,0 +1,84 @@
+.home-container {
+    padding: 20px;
+  }
+  
+  .search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: black;
+    transition: transform 0.2s ease;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .product-card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .product-card p {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .home-banner {
+    width: 100%;
+    height: 300px; /* Reduced height */
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  .home-background {
+  position: relative;
+  background-image: url('../static/mobile.jpg'); /* Update path as needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  z-index: 1;
+}
+
+.home-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8); /* White fading overlay */
+  backdrop-filter: blur(3px); /* Optional blur */
+  z-index: 2;
+}
+
+.home-container {
+  position: relative;
+  z-index: 3;
+  padding: 2rem;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+  
