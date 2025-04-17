@@ -1,36 +1,18 @@
-// src/pages/ProductDetail.js
-import { useParams, useNavigate } from 'react-router-dom';
-import products from '../data/Products';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/ProductDetail.css';
-
-import mobileImage from '../static/mobile.jpg';
-import laptopImage from '../static/laptop.jpg';
-import headphoneImage from '../static/headphone.jpg';
-import watchImage from '../static/watch.jpg';
+import placeholderImage from '../static/laptop.jpg';
 
 function ProductDetail({ addToCart }) {
-  const { id } = useParams();
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
-  const isLoggedIn = !user;
+  const location = useLocation();
+  const product = location.state?.product;
 
-  const product = products.find(p => p.id === parseInt(id));
-  if (!product) return <div>Product not found</div>;
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isLoggedIn = !!user;
 
-  const getImageForCategory = (category) => {
-    switch (category) {
-      case 'Mobiles':
-        return mobileImage;
-      case 'Laptops':
-        return laptopImage;
-      case 'Headphones':
-        return headphoneImage;
-      case 'Watches':
-        return watchImage;
-      default:
-        return '';
-    }
-  };
+  if (!product) {
+    return <div>Product not found</div>;
+  }
 
   const handleBuyNow = () => {
     if (isLoggedIn) {
@@ -41,22 +23,45 @@ function ProductDetail({ addToCart }) {
     }
   };
 
+  const getImageSrc = () => {
+    return product?.image && product.image.trim() !== ''
+      ? product.image
+      : placeholderImage;
+  };
+
   return (
-    <div className="product-detail">
-      <img
-        src={getImageForCategory(product.category)}
-        alt={product.name}
-        className="product-image"
-      />
-      <div className="detail-info">
-        <h2>{product.name}</h2>
-        <p><strong>Price:</strong> ₹{product.price}</p>
-        <p><strong>Rating:</strong> ⭐ {product.rating}</p>
-        <p><strong>Description:</strong> {product.description}</p>
-        <button onClick={() => addToCart(product)}>Add to Cart</button>
-        <button onClick={handleBuyNow} style={{ marginLeft: '10px' }}>
-          Buy Now
-        </button>
+    <div className="amazon-detail-container">
+      {/* Left: Image */}
+      <div className="amazon-detail-image">
+        <img
+          src={getImageSrc()}
+          alt={product.product_name || 'Product'}
+          onError={(e) => (e.target.src = placeholderImage)}
+        />
+      </div>
+
+      {/* Middle: Description */}
+      <div className="amazon-detail-info">
+        <h1>{product.product_name || 'Unnamed Product'}</h1>
+        <p className="brand">Brand: {product.brand_name || 'N/A'}</p>
+        <p className="rating">
+          ⭐ {product.rating || '4.2'} | {product.total_reviews || '142'} ratings
+        </p>
+        <p className="description">{product.product_description || 'No description available.'}</p>
+        <p className="specs"><strong>Specifications:</strong> {product.product_specification || 'No specifications available.'}</p>
+        <p className="technical-details"><strong>Technical Details:</strong> {product.technical_details || 'No technical details available.'}</p>
+        <p className="product-details"><strong>Product Details:</strong> {product.product_details || 'No details available.'}</p>
+        <p className="shipping-weight"><strong>Shipping Weight:</strong> {product.shipping_weight || 'N/A'}</p>
+        <p className="dimensions"><strong>Dimensions:</strong> {product.product_dimensions || 'N/A'}</p>
+      </div>
+
+      {/* Right: Cart Actions */}
+      <div className="amazon-detail-cartbox">
+        <p className="price">₹{product.selling_price || 'N/A'}</p>
+        <p className="stock">Stock: {product.stock || 'Out of Stock'}</p>
+        <p className="category">Category: {product.category || 'N/A'}</p>
+        <button className="cart-btn" onClick={() => addToCart(product)}>Add to Cart</button>
+        <button className="buy-btn" onClick={handleBuyNow}>Buy Now</button>
       </div>
     </div>
   );

@@ -1,62 +1,127 @@
-.product-detail {
-    max-width: 600px;
-    margin: 40px auto;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-  
-  .product-detail h1 {
-    font-size: 24px;
-    margin-bottom: 15px;
-  }
-  
-  .price {
-    font-size: 20px;
-    color: #b12704;
-    margin: 10px 0;
-  }
-  
-  .desc {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
-  .add-to-cart-btn {
-    background-color: #ffd814;
-    border: 1px solid #fcd200;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .add-to-cart-btn:hover {
-    background-color: #f7ca00;
-  }
-  
-  /* src/styles/ProductDetail.css */
-.product-detail {
+.amazon-detail-container {
   display: flex;
+  flex-direction: row;
   gap: 2rem;
   padding: 2rem;
+  background-color: #fff;
+  max-width: 1200px;
+  margin: auto;
+  font-family: Arial, sans-serif;
 }
 
-.product-image {
-  width: 300px;
+.amazon-detail-image img {
+  width: 350px;
   height: auto;
-  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  object-fit: contain;
 }
 
-.detail-info {
-  max-width: 600px;
+.amazon-detail-info {
+  flex: 2;
+  max-width: 600px; /* Ensure it doesn't stretch too much */
 }
 
-.detail-info button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+.amazon-detail-info h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  word-wrap: break-word; /* Ensure text wraps properly */
+}
+
+.amazon-detail-info .brand {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+}
+
+.amazon-detail-info .rating {
+  color: #c45500;
+  font-size: 14px;
+  margin-bottom: 1rem;
+}
+
+.amazon-detail-info .description {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.amazon-detail-info .specs,
+.amazon-detail-info .technical-details,
+.amazon-detail-info .product-details,
+.amazon-detail-info .shipping-weight,
+.amazon-detail-info .dimensions {
+  font-size: 14px;
+  color: #333;
+  margin-top: 0.5rem;
+  word-wrap: break-word;
+}
+
+.amazon-detail-cartbox {
+  flex: 1;
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  min-width: 250px;
+  height: fit-content;
+  word-wrap: break-word;
+}
+
+.amazon-detail-cartbox .price {
+  font-size: 22px;
+  color: #b12704;
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+}
+
+.amazon-detail-cartbox .stock {
+  color: #007600;
+  margin-bottom: 1rem;
+}
+
+.amazon-detail-cartbox .category {
+  font-size: 14px;
+  color: #007600;
+  margin-bottom: 1rem;
+}
+
+.amazon-detail-cartbox .cart-btn,
+.amazon-detail-cartbox .buy-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.amazon-detail-cartbox .cart-btn {
+  background-color: #ffd814;
+}
+
+.amazon-detail-cartbox .buy-btn {
+  background-color: #ffa41c;
+}
+
+/* Optional: Added media query for responsive design */
+@media (max-width: 768px) {
+  .amazon-detail-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .amazon-detail-image img {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 1rem;
+  }
+
+  .amazon-detail-cartbox {
+    margin-top: 1rem;
+  }
 }

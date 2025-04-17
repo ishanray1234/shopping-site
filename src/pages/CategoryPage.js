@@ -2,41 +2,61 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FilterSidebar from '../components/FilterSidebar';
-import products from '../data/Products';
 import ProductCard from '../components/ProductCard';
 import '../styles/CategoryPage.css';
 import '../styles/FilterSidebar.css';
 
-const CategoryPage = ({addToCart}) => {
+const CategoryPage = ({ addToCart }) => {
   const { category } = useParams();
 
   const [filters, setFilters] = useState({
-    price: 100000,
+    price: 1000,
     brands: [],
     rating: 0,
   });
 
+  const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categoryBrands, setCategoryBrands] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const productsInCategory = products.filter(
-      (product) => product.category.toLowerCase() === category.toLowerCase()
-    );
+    const fetchCategoryProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://e619-2409-40e1-10c6-c147-b636-7148-b26b-de61.ngrok-free.app/categories/${category}`,{
+            headers: {
+              'ngrok-skip-browser-warning': 'true',
+            },
+          }
+        );
+        const data = await response.json();
+        setAllProducts(data);
+        const uniqueBrands = [...new Set(data.map((p) => p.brand_name).filter(Boolean))];
+        setCategoryBrands(uniqueBrands);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching category products:', error);
+        setLoading(false);
+      }
+    };
 
-    const uniqueBrands = [...new Set(productsInCategory.map(p => p.brand))];
-    setCategoryBrands(uniqueBrands);
+    fetchCategoryProducts();
+  }, [category]);
 
-    const filtered = productsInCategory.filter((product) => {
-      const withinPrice = product.price <= filters.price;
+  console.log(allProducts);
+  useEffect(() => {
+    const filtered = allProducts.filter((product) => {
+      const withinPrice = parseFloat(product.selling_price || 0) <= filters.price;
       const matchesBrand =
-        filters.brands.length === 0 || filters.brands.includes(product.brand);
-      const matchesRating = product.rating >= filters.rating;
+        filters.brands.length === 0 || filters.brands.includes(product.brand_name);
+      const matchesRating = parseFloat(product.rating || 0) >= filters.rating;
       return withinPrice && matchesBrand && matchesRating;
     });
 
     setFilteredProducts(filtered);
-  }, [category, filters]);
+  }, [allProducts, filters]);
 
   return (
     <div className="category-page">
@@ -48,15 +68,19 @@ const CategoryPage = ({addToCart}) => {
 
       <div className="products-grid">
         <h2>{category.charAt(0).toUpperCase() + category.slice(1)} Products</h2>
-        <div className="products-list">
-          {filteredProducts.length ? (
-            filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} addToCart={addToCart}/>
-            ))
-          ) : (
-            <p>No products match the selected filters.</p>
-          )}
-        </div>
+        {loading ? (
+          <p>Loading products...</p>
+        ) : (
+          <div className="products-list">
+            {filteredProducts.length ? (
+              filteredProducts.map((product) => (
+                <ProductCard key={product.uniq_id} product={product} addToCart={addToCart} />
+              ))
+            ) : (
+              <p>No products match the selected filters.</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

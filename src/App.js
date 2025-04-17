@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
@@ -10,6 +10,7 @@ import CategoryBar from './components/CategoryBar';
 import Admin from './pages/Admin';
 import PaymentPage from './pages/PaymentPage';
 import AdminAnalytics from './pages/AdminAnalytics';
+import UserInfo from './pages/UserInfo';
 
 import './styles/App.css';
 import './styles/Navbar.css';
@@ -24,6 +25,20 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const userCookie = getCookie('user');
+    if (userCookie) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const getCookie = (name) => {
+    return document.cookie.split('; ').reduce((r, v) => {
+      const parts = v.split('=');
+      return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+    }, '');
+  };
 
   // Function to add product to cart
   const addToCart = (product) => {
@@ -48,6 +63,7 @@ function App() {
         setSearchTerm={setSearchTerm}
         isLoggedIn={isLoggedIn} 
         setIsLoggedIn={setIsLoggedIn}
+        username={JSON.parse(getCookie('user'))?.username || ''}
       />
       <CategoryBar />
       <Routes>
@@ -71,11 +87,12 @@ function App() {
           element={<ProductDetail addToCart={addToCart} />}
         />
         <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={handleRemove} />} />
-
+        <Route path="/user-info" element={<UserInfo />} />
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/admin/analytics" element={<AdminAnalytics />} />
+        
       </Routes>
       
     </Router>

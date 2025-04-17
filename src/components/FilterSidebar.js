@@ -20,7 +20,7 @@ const FilterSidebar = ({ filters, setFilters, brands }) => {
   };
 
   const clearFilters = () => {
-    setFilters({ price: 100000, brands: [], rating: 0 });
+    setFilters({ price: 1000, brands: [], rating: 0 });
   };
 
   return (
@@ -32,8 +32,8 @@ const FilterSidebar = ({ filters, setFilters, brands }) => {
         <input
           type="range"
           min="0"
-          max="200000"
-          step="5000"
+          max="1000"
+          step="10"
           value={filters.price}
           onChange={handlePriceChange}
         />

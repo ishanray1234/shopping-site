@@ -2,7 +2,8 @@
 import { useNavigate } from 'react-router-dom';
 import '../styles/CategoryBar.css';
 
-const categories = ['Mobiles', 'Laptops', 'Headphones', 'Watches'];
+const categories = ['Games', 'Toys', 'Accessories', 'Play', 'Sports',
+  'Hobbies','Kids','Supplies','Vehicles','Kitchen','Baby','Home','Crafts','Costumes','Arts'];
 
 function CategoryBar() {
   const navigate = useNavigate();
