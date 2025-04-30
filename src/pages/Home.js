@@ -3,6 +3,7 @@ import '../styles/Home.css';
 import ProductCard from '../components/ProductCard';
 import bannerImage from '../static/bg.jpg';
 import axios from 'axios';
+import { BASE_URL, API_HEADERS } from '../config';
 
 function Home({ addToCart }) {
   const [products, setProducts] = useState([]);
@@ -10,10 +11,8 @@ function Home({ addToCart }) {
 
   useEffect(() => {
     axios
-      .get('https://e619-2409-40e1-10c6-c147-b636-7148-b26b-de61.ngrok-free.app/products/', {
-        headers: {
-          'ngrok-skip-browser-warning': 'true',
-        },
+      .get(`${BASE_URL}/products/`, {
+        headers: API_HEADERS,
       })
       .then((response) => {
         setProducts(response.data || []);

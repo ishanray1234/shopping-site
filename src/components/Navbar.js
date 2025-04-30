@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL, API_HEADERS } from '../config';
+
 
 const Navbar = ({ cartItems = [], isLoggedIn, setIsLoggedIn, username }) => {
   const navigate = useNavigate();
@@ -13,10 +15,8 @@ const Navbar = ({ cartItems = [], isLoggedIn, setIsLoggedIn, username }) => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          "https://e619-2409-40e1-10c6-c147-b636-7148-b26b-de61.ngrok-free.app/products/",{
-            headers: {
-              "ngrok-skip-browser-warning": "true",
-            },
+          `${BASE_URL}/products/`,{
+            headers: API_HEADERS
           }
 
         );
@@ -49,11 +49,12 @@ const Navbar = ({ cartItems = [], isLoggedIn, setIsLoggedIn, username }) => {
     setIsLoggedIn(false);
   };
 
-  // const handleProductClick = (product) => {
-  //   navigate(`/product/${product.uniq_id}`, { state: { product } });
-  // };
+  const handleProductClick = (product) => {
+    navigate(`/product/${product.uniq_id}`, { state: { product } });
+  };
 
   return (
+    // <></>
     <div className="navbar">
       <div className="navbar-logo">
         <Link to="/" className="navbar-logo">

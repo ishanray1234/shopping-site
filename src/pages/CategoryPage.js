@@ -5,6 +5,7 @@ import FilterSidebar from '../components/FilterSidebar';
 import ProductCard from '../components/ProductCard';
 import '../styles/CategoryPage.css';
 import '../styles/FilterSidebar.css';
+import { BASE_URL, API_HEADERS } from '../config';
 
 const CategoryPage = ({ addToCart }) => {
   const { category } = useParams();
@@ -25,10 +26,8 @@ const CategoryPage = ({ addToCart }) => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://e619-2409-40e1-10c6-c147-b636-7148-b26b-de61.ngrok-free.app/categories/${category}`,{
-            headers: {
-              'ngrok-skip-browser-warning': 'true',
-            },
+          `${BASE_URL}/categories/${category}`,{
+            headers: API_HEADERS,
           }
         );
         const data = await response.json();
